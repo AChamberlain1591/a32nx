@@ -1,4 +1,4 @@
-﻿@import url("/CSS/A32NX_Display_Common.css");
+@import url("/CSS/A32NX_Display_Common.css");
 
 a320-neo-lower-ecam-apu {
   display: block;
@@ -42,8 +42,12 @@ a320-neo-lower-ecam-apu text.Title {
   fill: var(--displayWhite);
   font-size: 18px;
 }
-:root .APUGenTitle {
-  fill: var(--displayGreen);
+:root .APUGenTitleAvail {
+  fill: var(--displayWhite);
+  font-size: 18px;
+}
+:root .APUGenTitleWarn {
+  fill: var(--displayAmber);
   font-size: 18px;
 }
 :root #APUBleed {
