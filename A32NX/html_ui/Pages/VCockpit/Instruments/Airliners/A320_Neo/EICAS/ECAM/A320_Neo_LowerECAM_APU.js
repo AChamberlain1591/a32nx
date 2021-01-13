@@ -67,6 +67,7 @@ var A320_Neo_LowerECAM_APU;
             const currentAPUMasterState = SimVar.GetSimVarValue("FUELSYSTEM VALVE SWITCH:8", "Bool");
 			const APUGenFreq = SimVar.GetSimVarValue("L:APU_GEN_FREQ", "Hertz");
 			const APUGenVolts = SimVar.GetSimVarValue("L:APU_GEN_VOLTAGE","Volts");
+			const APUPctRPM = SimVar.GetSimVarValue("APU PCT RPM", "percent");
 
             if (this.lastAPUMasterState != currentAPUMasterState) {
                 this.lastAPUMasterState = currentAPUMasterState;
@@ -75,7 +76,7 @@ var A320_Neo_LowerECAM_APU;
                 }
             }
 
-			if (currentAPUMasterState === 1){
+			if (currentAPUMasterState === 1 || APUPctRPM > 95){
 				if (APUGenFreq >= 390 && APUGenFreq <= 410){
 					this.APUFrequency.setAttribute("class", "APUGenParamValue");
 				}
@@ -98,9 +99,7 @@ var A320_Neo_LowerECAM_APU;
 				}
 			}
 
-            const APUPctRPM = SimVar.GetSimVarValue("APU PCT RPM", "percent");
-
-            const apuFlapOpenPercent = SimVar.GetSimVarValue("L:APU_FLAP_OPEN", "Percent");
+			const apuFlapOpenPercent = SimVar.GetSimVarValue("L:APU_FLAP_OPEN", "Percent");
 
             // Bleed
             const currentAPUBleedState = SimVar.GetSimVarValue("BLEED AIR APU","Bool");
