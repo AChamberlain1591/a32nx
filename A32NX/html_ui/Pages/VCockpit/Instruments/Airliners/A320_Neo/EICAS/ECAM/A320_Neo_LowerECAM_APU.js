@@ -65,14 +65,38 @@ var A320_Neo_LowerECAM_APU;
             // *******************************************************************************************************
 
             const currentAPUMasterState = SimVar.GetSimVarValue("FUELSYSTEM VALVE SWITCH:8", "Bool");
+			const APUGenFreq = SimVar.GetSimVarValue("L:APU_GEN_FREQ", "Hertz");
+			const APUGenVolts = SimVar.GetSimVarValue("L:APU_GEN_VOLTAGE","Volts");
 
             if (this.lastAPUMasterState != currentAPUMasterState) {
                 this.lastAPUMasterState = currentAPUMasterState;
                 if (currentAPUMasterState === 1) {
                     this.APUGenInfo.setAttribute("visibility", "visible");
-                    this.APUGenTitle.setAttribute("class", "APUGenTitle");
                 }
             }
+
+			if (currentAPUMasterState === 1){
+				if (APUGenFreq >= 390 && APUGenFreq <= 410){
+					this.APUFrequency.setAttribute("class", "APUGenParamValue");
+				}
+				else{
+					this.APUFrequency.setAttribute("class", "APUGenParamValueWarn");
+				}
+				
+				if (APUGenVolts >= 110 && APUGenVolts <= 120){
+					this.APUVolts.setAttribute("class", "APUGenParamValue");
+				}
+				else{
+					this.APUVolts.setAttribute("class", "APUGenParamValueWarn");
+				}
+				
+				if (APUGenVolts >= 110 && APUGenVolts <= 120 && APUGenFreq >= 390 && APUGenFreq <=410){
+					this.APUGenTitle.setAttribute("class", "APUGenTitleAvail");
+				}
+				else{
+					this.APUGenTitle.setAttribute("class", "APUGenTitleWarn");
+				}
+			}
 
             const APUPctRPM = SimVar.GetSimVarValue("APU PCT RPM", "percent");
 
@@ -96,9 +120,7 @@ var A320_Neo_LowerECAM_APU;
             //display volt,load,freq
             this.APUGenLoad.textContent = Math.round(SimVar.GetSimVarValue("L:APU_LOAD_PERCENT","percent"));
             this.APUVolts.textContent = SimVar.GetSimVarValue("L:APU_GEN_VOLTAGE","Volts");
-            this.APUVolts.setAttribute("class", "APUGenParamValue");
             this.APUFrequency.textContent = SimVar.GetSimVarValue("L:APU_GEN_FREQ","Hertz");
-            this.APUFrequency.setAttribute("class", "APUGenParamValue");
 
             const adirsAligned = SimVar.GetSimVarValue("L:A320_Neo_ADIRS_STATE", "Number") === 2;
             const apuGenActive = SimVar.GetSimVarValue("APU GENERATOR ACTIVE", "Bool") === 1;
